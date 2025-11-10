@@ -1,0 +1,309 @@
+<!-- Chosen Palette: Warm Neutral (Amber/Stone) -->
+<!-- Application Structure Plan: La structure est une SPA (Single Page Application) à onglets. Elle utilise 4 onglets principaux : "Vision", "Programme", "Activités Clés", et "Prochaines Étapes". Cette architecture a été choisie car le document source est un plan stratégique. Une navigation par onglets permet à l'utilisateur (par exemple, le Pasteur) de segmenter l'information logiquement et de "naviguer" dans le plan, plutôt que de lire passivement un long document. Le flux utilisateur commence par la Vision (l'objectif), passe au Programme (le "comment"), puis aux Activités (le "quoi d'autre"), et enfin aux Étapes (le "quand"). L'interaction principale se fait en cliquant sur les onglets, ce qui affiche la section de contenu correspondante. -->
+<!-- Visualization & Content Choices:
+1.  Info: Objectifs Principaux. Goal: Informer. Viz: Cartes HTML/Tailwind (Grid). Interaction: N/A. Justification: Présentation claire des 4 piliers.
+2.  Info: Routine Mensuelle (4 Dimanches). Goal: Organiser. Viz: Grille HTML/Tailwind à 4 colonnes. Interaction: N/A. Justification: Visualise la structure répétitive de manière plus claire qu'un tableau.
+3.  Info: Synthèse du Programme. Goal: Informer/Synthétiser. Viz: Graphique Donut (Chart.js/Canvas). Interaction: Survol (Tooltip). Justification: Fournit un aperçu visuel de l'équilibre du programme mensuel (1 présentiel, 2 à distance, 1 spécial).
+4.  Info: Calendrier 6 mois. Goal: Montrer le changement. Viz: Ligne du temps simple (HTML/Flexbox). Interaction: N/A. Justification: Sépare clairement la phase "Incubation" de la phase "Croissance".
+5.  Info: Activités & Étapes. Goal: Informer. Viz: Listes/Cartes HTML. Interaction: N/A. Justification: Présente le contenu textuel de manière structurée.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-R">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Lancement | Cellule South Bend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-active {
+            border-bottom-color: #f59e0b; /* amber-500 */
+            color: #f59e0b;
+            font-weight: 500;
+        }
+        .tab-inactive {
+            border-bottom-color: transparent;
+            color: #4b5563; /* gray-600 */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 300px;
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased">
+
+    <div class="container mx-auto max-w-6xl p-4 md:p-8">
+
+        <!-- En-tête -->
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-700">Plan de Lancement Stratégique</h1>
+            <p class="text-lg md:text-xl text-stone-600 mt-2">Cellule de South Bend, Indiana (Nov 2025 - Avr 2026)</p>
+            <p class="text-sm text-stone-500">Proposé par: Raymond Alavo</p>
+        </header>
+
+        <!-- Navigation par Onglets -->
+        <div class="border-b border-stone-200 mb-8">
+            <nav class="-mb-px flex flex-wrap justify-center gap-x-4 md:gap-x-8" role="tablist">
+                <button role="tab" data-tab="vision" class="tab-button py-4 px-2 md:px-4 text-sm md:text-base border-b-2 font-medium tab-active">
+                    Vision & Objectifs
+                </button>
+                <button role="tab" data-tab="programme" class="tab-button py-4 px-2 md:px-4 text-sm md:text-base border-b-2 font-medium tab-inactive">
+                    Le Programme (6 Mois)
+                </button>
+                <button role="tab" data-tab="activites" class="tab-button py-4 px-2 md:px-4 text-sm md:text-base border-b-2 font-medium tab-inactive">
+                    Activités Clés
+                </button>
+                <button role="tab" data-tab="etapes" class="tab-button py-4 px-2 md:px-4 text-sm md:text-base border-b-2 font-medium tab-inactive">
+                    Prochaines Étapes
+                </button>
+            </nav>
+        </div>
+
+        <!-- Contenu des Onglets -->
+        <main>
+            <!-- Section 1: Vision & Objectifs -->
+            <section id="vision" class="content-section content-active">
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-stone-100">
+                    <h2 class="text-2xl font-bold text-amber-700 mb-4">Notre Vision</h2>
+                    <p class="text-stone-600 mb-6">
+                        Cette section définit la vision et les piliers de notre plan de lancement. L'objectif est de formaliser l'existence de la cellule, d'établir une routine d'engagement solide durant l'hiver, et de préparer la cellule à une phase de croissance et de localisation physique au printemps.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div class="p-5 bg-amber-50 rounded-lg border border-amber-200">
+                            <h3 class="font-bold text-lg text-amber-800 mb-2">Formalisation & Routine</h3>
+                            <p class="text-sm text-amber-900">Établir une habitude de rencontre régulière pour les membres, tout en allégeant la charge organisationnelle initiale.</p>
+                        </div>
+                        <div class="p-5 bg-amber-50 rounded-lg border border-amber-200">
+                            <h3 class="font-bold text-lg text-amber-800 mb-2">Connexion à Atlanta</h3>
+                            <p class="text-sm text-amber-900">Créer une attache spirituelle réelle et directe avec le pasteur Ceniel et l'Apôtre Mohamed Sanogo.</p>
+                        </div>
+                        <div class="p-5 bg-amber-50 rounded-lg border border-amber-200">
+                            <h3 class="font-bold text-lg text-amber-800 mb-2">Évangélisation</h3>
+                            <p class="text-sm text-amber-900">Mettre en place un rythme de croissance constant pour agrandir la famille de manière intentionnelle.</p>
+                        </div>
+                        <div class="p-5 bg-amber-50 rounded-lg border border-amber-200">
+                            <h3 class="font-bold text-lg text-amber-800 mb-2">Transition Post-Hiver</h3>
+                            <p class="text-sm text-amber-900">Sortir de l'hiver (Avril 2026) avec une cellule structurée, prête à chercher une salle pour les cultes en présentiel.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Le Programme (6 Mois) -->
+            <section id="programme" class="content-section">
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-stone-100">
+                    <h2 class="text-2xl font-bold text-amber-700 mb-4">Le Programme Détaillé</h2>
+                    <p class="text-stone-600 mb-6">
+                        Voici le cœur de notre routine. Cette structure mensuelle est conçue pour être progressive, équilibrée et répétable. Elle alterne entre des rencontres physiques pour la communion et des connexions virtuelles pour maintenir le lien avec la maison mère à Atlanta.
+                    </p>
+
+                    <h3 class="text-xl font-bold text-stone-700 mb-4 mt-6">La Routine Mensuelle des Dimanches</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+                        <!-- 1er Dimanche -->
+                        <div class="flex flex-col p-5 bg-stone-100 rounded-lg border border-stone-200 h-full">
+                            <span class="text-xs font-semibold text-amber-700 uppercase">1er Dimanche</span>
+                            <h4 class="font-bold text-lg text-stone-800 mt-1 mb-2">Culte en Présentiel</h4>
+                            <p class="text-sm text-stone-600 flex-grow"><span class="font-medium">Objectif:</span> Connexion et Communion. Les membres se réunissent chez un hôte pour suivre ensemble le culte d'Atlanta.</p>
+                        </div>
+                        <!-- 2ème Dimanche -->
+                        <div class="flex flex-col p-5 bg-stone-100 rounded-lg border border-stone-200 h-full">
+                            <span class="text-xs font-semibold text-amber-700 uppercase">2ème Dimanche</span>
+                            <h4 class="font-bold text-lg text-stone-800 mt-1 mb-2">Culte en Ligne (Zoom)</h4>
+                            <p class="text-sm text-stone-600 flex-grow"><span class="font-medium">Objectif:</span> Répétition de la Connexion. Suivi collectif du culte d'Atlanta via Zoom, chacun de chez soi.</p>
+                        </div>
+                        <!-- 3ème Dimanche -->
+                        <div class="flex flex-col p-5 bg-stone-100 rounded-lg border border-stone-200 h-full">
+                            <span class="text-xs font-semibold text-amber-700 uppercase">3ème Dimanche</span>
+                            <h4 class="font-bold text-lg text-stone-800 mt-1 mb-2">Culte Spécial Cellules</h4>
+                            <p class="text-sm text-stone-600 flex-grow"><span class="font-medium">Objectif:</span> Attache Spirituelle. Culte Zoom dédié aux cellules (13h-16h) avec la participation du Pasteur Ceniel.</p>
+                        </div>
+                        <!-- 4ème Dimanche -->
+                        <div class="flex flex-col p-5 bg-stone-100 rounded-lg border border-stone-200 h-full">
+                            <span class="text-xs font-semibold text-amber-700 uppercase">4ème Dimanche</span>
+                            <h4 class="font-bold text-lg text-stone-800 mt-1 mb-2">Rotation & Autonomie</h4>
+                            <p class="text-sm text-stone-600 flex-grow"><span class="font-medium">Objectif:</span> Autonomie Progressive. Soit un nouveau suivi du culte d'Atlanta, soit un culte dirigé par les responsables de la cellule.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-stone-700 mb-4 mt-8 text-center">Aperçu Visuel de la Structure Mensuelle</h3>
+                    <div class="chart-container mb-8">
+                        <canvas id="planDonutChart"></canvas>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-stone-700 mb-4 mt-8">Calendrier sur 6 Mois</h3>
+                    <div class="flex flex-col md:flex-row w-full bg-stone-100 rounded-lg overflow-hidden border border-stone-200">
+                        <div class="flex-1 p-6 border-b md:border-b-0 md:border-r border-stone-200">
+                            <span class="text-xs font-semibold text-amber-700 uppercase">Phase 1: Incubation</span>
+                            <h4 class="font-bold text-lg text-stone-800 mb-1">Novembre 2025 - Avril 2026</h4>
+                            <p class="text-sm text-stone-600">Période d'hiver axée sur l'établissement de la routine, le renforcement des liens et la connexion spirituelle.</p>
+                        </div>
+                        <div class="flex-1 p-6 bg-white">
+                            <span class="text-xs font-semibold text-green-700 uppercase">Phase 2: Croissance</span>
+                            <h4 class="font-bold text-lg text-stone-800 mb-1">À partir de Mai 2026</h4>
+                            <p class="text-sm text-stone-600">Début de la recherche active d'une salle pour les cultes en présentiel, marquant une nouvelle saison d'expansion.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Activités Clés -->
+            <section id="activites" class="content-section">
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-stone-100">
+                    <h2 class="text-2xl font-bold text-amber-700 mb-4">Activités Complémentaires</h2>
+                    <p class="text-stone-600 mb-6">
+                        En plus de notre routine de dimanches, ces activités sont essentielles pour la croissance et le bon fonctionnement de la cellule. Elles se concentrent sur l'expansion de la famille et la gestion logistique de nos rencontres.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="p-6 bg-stone-100 rounded-lg border border-stone-200">
+                            <h3 class="font-bold text-xl text-stone-800 mb-2">Session d’Évangélisation (1x/Mois)</h3>
+                            <ul class="list-disc list-inside text-stone-600 space-y-1 text-sm md:text-base">
+                                <li><span class="font-medium">Fréquence:</span> Une fois par mois, à une date à déterminer.</li>
+                                <li><span class="font-medium">Format:</span> Rassemblement pour la prière, suivi d'une sortie d'évangélisation.</li>
+                                <li><span class="font-medium">Logistique:</span> Prévoir des éléments de partage (nourriture, boissons) pour faciliter le contact.</li>
+                                <li><span class="font-medium">Objectif:</span> Agrandir la famille de la cellule de manière constante et intentionnelle.</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-stone-100 rounded-lg border border-stone-200">
+                            <h3 class="font-bold text-xl text-stone-800 mb-2">Gestion de la Logistique</h3>
+                            <ul class="list-disc list-inside text-stone-600 space-y-1 text-sm md:text-base">
+                                <li><span class="font-medium">Rotation des Hôtes:</span> La rencontre en présentiel (1er dimanche) pourra être mobile.</li>
+                                <li><span class="font-medium">Objectif:</span> Impliquer et responsabiliser les différents membres de la cellule dans l'accueil.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Prochaines Étapes -->
+            <section id="etapes" class="content-section">
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-stone-100">
+                    <h2 class="text-2xl font-bold text-amber-700 mb-4">Objectifs et Actions Immédiates</h2>
+                    <p class="text-stone-600 mb-6">
+                        Cette section résume notre jalon principal à 6 mois et les actions concrètes à entreprendre dès maintenant pour lancer officiellement ce plan.
+                    </p>
+                    
+                    <div class="p-6 bg-amber-50 rounded-lg border border-amber-200 mb-6">
+                        <h3 class="font-bold text-xl text-amber-800 mb-2">Objectif Jalon (6 Mois)</h3>
+                        <p class="text-amber-900">Atteindre un niveau de routine, d'engagement et un nombre de membres suffisant pour justifier la transition vers la recherche active d'une salle (Phase 2) en Mai 2026.</p>
+                    </div>
+
+                    <div class="p-6 bg-stone-100 rounded-lg border border-stone-200">
+                        <h3 class="font-bold text-xl text-stone-800 mb-3">Proposition de Calendrier d'Action Immédiate</h3>
+                        <ol class="list-decimal list-inside text-stone-600 space-y-2">
+                            <li>Valider la structure des 4 dimanches, en particulier l’horaire du culte Zoom spécifique avec le Pasteur Ceniel.</li>
+                            <li>Déterminer la date et l'emplacement de la première session d'évangélisation (pour Novembre ou Décembre).</li>
+                            <li>Nommer un coordinateur logistique pour gérer la rotation des lieux d'accueil du 1er dimanche.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('[role="tab"]');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.tab;
+                    
+                    tabs.forEach(t => {
+                        t.classList.remove('tab-active');
+                        t.classList.add('tab-inactive');
+                    });
+                    
+                    tab.classList.add('tab-active');
+                    tab.classList.remove('tab-inactive');
+                    
+                    contentSections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.add('content-active');
+                        } else {
+                            section.classList.remove('content-active');
+                        }
+                    });
+                });
+            });
+
+            if (document.getElementById('planDonutChart')) {
+                const ctx = document.getElementById('planDonutChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            '1er Dim: Présentiel (suit Atlanta)',
+                            '2e Dim: Zoom (suit Atlanta)',
+                            '3e Dim: Spécial Cellules (avec Pasteur)',
+                            '4e Dim: Rotation (Atlanta/Autonome)'
+                        ],
+                        datasets: [{
+                            label: 'Structure Mensuelle',
+                            data: [1, 1, 1, 1],
+                            backgroundColor: [
+                                '#f59e0b', // amber-500
+                                '#d97706', // amber-600
+                                '#b45309', // amber-700
+                                '#78350f'  // amber-900
+                            ],
+                            borderColor: '#fdfbf7', // bg-stone-50
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 20,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': 1 Dimanche';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
